@@ -1,30 +1,38 @@
 import { useEffect, useRef, useState } from 'react';
 import { AppLayout } from './AppLayout';
+import { useRequestGetTodos } from './hooks/useRequestGetTodos';
+
 export const AppContainer = () => {
-	const [todos, setTodos] = useState([]);
+	const { todos, setTodos, isLoading } = useRequestGetTodos();
+	// const [todos, setTodos] = useState([]);
 	const [inputValue, setInputValue] = useState('');
 	const [isUpdate, setIsUpdate] = useState(false);
 	const [idTask, setIdTask] = useState('');
 	const [isSearch, setIsSearch] = useState(false);
 	const [todoSearch, setTodosSearch] = useState([]);
+	// const [isLoading, setIsLoading] = useState(false);
 	const inputRef = useRef(null);
 
-	useEffect(() => {
-		const fetchTasks = async () => {
-			try {
-				const response = await fetch('http://localhost:3000/tasks');
-				if (!response.ok) {
-					throw new Error('Ошибка запроса');
-				}
-				const result = await response.json();
-				setTodos(result);
-			} catch (error) {
-				console.error(error);
-			}
-		};
+	// useEffect(() => {
+	// 	setIsLoading(true);
+	// 	const fetchTasks = async () => {
+	// 		try {
+	// 			const response = await fetch('http://localhost:3000/tasks');
+	// 			if (!response.ok) {
+	// 				throw new Error('Ошибка запроса');
+	// 			}
+	// 			const result = await response.json();
+	// 			setTimeout(() => {
+	// 				setTodos(result);
+	// 				setIsLoading(false);
+	// 			}, 2000);
+	// 		} catch (error) {
+	// 			console.error(error);
+	// 		}
+	// 	};
 
-		fetchTasks();
-	}, []);
+	// 	fetchTasks();
+	// }, []);
 
 	const changeInput = ({ target }) => {
 		setInputValue(target.value);
@@ -71,7 +79,7 @@ export const AppContainer = () => {
 	const requestEditTask = async id => {
 		setIsUpdate(true);
 		inputRef.current.focus();
-		
+
 		try {
 			const response = await fetch(`http://localhost:3000/tasks/${id}`);
 			if (!response.ok) {
@@ -81,8 +89,6 @@ export const AppContainer = () => {
 			const result = await response.json();
 			setIdTask(result.id);
 			setInputValue(result.title);
-			console.log('value ', inputRef.current);
-			
 		} catch (error) {
 			console.error(error);
 		}
@@ -146,6 +152,7 @@ export const AppContainer = () => {
 			isSearch={isSearch}
 			todoSearch={todoSearch}
 			handleSort={handleSort}
+			isLoading={isLoading}
 		/>
 	);
 };

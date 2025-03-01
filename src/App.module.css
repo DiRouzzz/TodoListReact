@@ -27,43 +27,7 @@ h1 {
   outline: none;
 }
 
-.addBtn, .searchBtn, .sortBtn {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-size: 14px;
-}
 
-.addBtn {
-  background: #4caf50;
-  color: white;
-}
-
-.addBtn:hover {
-  background: #45a049;
-}
-
-/* Кнопка "Поиск" */
-.searchBtn {
-  background: #3498db;
-  color: white;
-}
-
-.searchBtn:hover {
-  background: #2980b9;
-}
-
-/* Кнопка "Отсортировать" */
-.sortBtn {
-  background: #9b59b6;
-  color: white;
-}
-
-.sortBtn:hover {
-  background: #8e44ad;
-}
 
 /* Список задач */
 .todoList {
@@ -105,6 +69,44 @@ h1 {
   flex-shrink: 0; /* Предотвращает сжатие кнопок */
 }
 
+.addBtn, .searchBtn, .sortBtn {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.addBtn {
+  background: #4caf50;
+  color: white;
+}
+
+.addBtn:hover {
+  background: #45a049;
+}
+
+/* Кнопка "Поиск" */
+.searchBtn {
+  background: #3498db;
+  color: white;
+}
+
+.searchBtn:hover {
+  background: #2980b9;
+}
+
+/* Кнопка "Отсортировать" */
+.sortBtn {
+  background: #9b59b6;
+  color: white;
+}
+
+.sortBtn:hover {
+  background: #8e44ad;
+}
+
 /* Стили кнопок */
 .editBtn,
 .deleteBtn {
@@ -135,4 +137,27 @@ h1 {
 
 .deleteBtn:hover {
   background: #c0392b;
+}
+
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+/* Спиннер */
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid transparent;
+    border-top-color: var(--spinner-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Анимация вращения */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
