@@ -2,13 +2,16 @@ import { useState } from 'react';
 
 export const useRequestPostTodos = (setTodos, setInputValue) => {
 	const [isSearch, setIsSearch] = useState(false);
-	const requestAddTask = async value => {
+	const requestAddTask = async inputValue => {
+		if (!inputValue) {
+			return;
+		}
 		setIsSearch(false);
 		try {
 			const response = await fetch('http://localhost:3000/tasks', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json;charset=utf-8' },
-				body: JSON.stringify({ title: value }),
+				body: JSON.stringify({ title: inputValue.trim() }),
 			});
 
 			if (!response.ok) {

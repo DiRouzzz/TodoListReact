@@ -22,12 +22,15 @@ export const useRequestUpdateTodos = (setInputValue, setTodos) => {
 	};
 
 	const requestUpdateTask = async (inputValue, id) => {
+		if (!inputValue) {
+			return;
+		}
 		try {
 			const response = await fetch(`http://localhost:3000/tasks/${id}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json;charset=utf-8' },
 				body: JSON.stringify({
-					title: inputValue,
+					title: inputValue.trim(),
 				}),
 			});
 			if (!response.ok) {
