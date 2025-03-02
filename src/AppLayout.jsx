@@ -2,13 +2,13 @@ import styles from './App.module.css';
 
 export const AppLayout = ({
 	todos,
+	setTodos,
 	requestAddTask,
 	changeInput,
 	inputValue,
 	requestRemoveTask,
 	inputRef,
 	requestEditTask,
-	handleSubmit,
 	isUpdate,
 	requestUpdateTask,
 	idTask,
@@ -22,7 +22,7 @@ export const AppLayout = ({
 
 	return (
 		<div className={styles.container}>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={event => event.preventDefault()}>
 				<h1>📋 Мой список дел</h1>
 
 				{isLoading ? (
@@ -57,7 +57,9 @@ export const AppLayout = ({
 										onClick={() => searchTask(inputValue)}>
 										🔍 Поиск
 									</button>
-									<button className={styles.sortBtn} onClick={handleSort}>
+									<button
+										className={styles.sortBtn}
+										onClick={() => handleSort(todos, setTodos)}>
 										🔃 Отсортировать
 									</button>
 								</>
@@ -67,18 +69,20 @@ export const AppLayout = ({
 							{tasksList.map(({ id, title }) => (
 								<li key={id}>
 									<span className={styles.taskText}>{title}</span>
-									<div className={styles.taskButtons}>
-										<button
-											className={styles.editBtn}
-											onClick={() => requestEditTask(id)}>
-											✏️ Редактировать
-										</button>
-										<button
-											className={styles.deleteBtn}
-											onClick={() => requestRemoveTask(id)}>
-											❌ Удалить
-										</button>
-									</div>
+									{isUpdate ? null : (
+										<div className={styles.taskButtons}>
+											<button
+												className={styles.editBtn}
+												onClick={() => requestEditTask(id)}>
+												✏️ Редактировать
+											</button>
+											<button
+												className={styles.deleteBtn}
+												onClick={() => requestRemoveTask(id)}>
+												❌ Удалить
+											</button>
+										</div>
+									)}
 								</li>
 							))}
 						</ul>

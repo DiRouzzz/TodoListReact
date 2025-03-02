@@ -1,163 +1,156 @@
 .container {
-  width: 700px;
-  background: var(--task-bg);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px var(--task-shadow);
+	width: 700px;
+	background: var(--task-bg);
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px var(--task-shadow);
 }
 
-/* Заголовок */
 h1 {
-  text-align: center;
-  margin-bottom: 15px;
+	text-align: center;
+	margin-bottom: 15px;
 }
 
-/* Форма добавления */
 .todoForm {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap; /* Чтобы кнопки не вылазили за границы */
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
 }
 
 .todoForm input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
+	flex: 1;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	outline: none;
 }
 
-
-
-/* Список задач */
 .todoList {
-  list-style: none;
-  margin-top: 20px;
-  padding: 0;
+	list-style: none;
+	margin-top: 20px;
+	padding: 0;
 }
 
 .todoList li {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--task-bg);
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 5px var(--task-shadow);
-  transition: 0.3s;
-  overflow: hidden; /* Предотвращает выход содержимого */
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	background: var(--task-bg);
+	padding: 10px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	box-shadow: 0 2px 5px var(--task-shadow);
+	transition: 0.3s;
+	overflow: hidden;
 }
 
-/* Обёртка для текста */
 .todoList li .taskText {
-  flex: 1;
-  min-width: 0; /* Важно для корректного переноса текста */
-  max-width: calc(100% - 120px); /* Ограничение ширины, чтобы текст не раздвигал контейнер */
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
+	flex: 1;
+	min-width: 0;
+	max-width: calc(100% - 120px);
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	white-space: normal;
 }
 
-/* Контейнер для кнопок */
 .taskButtons {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-shrink: 0; /* Предотвращает сжатие кнопок */
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	flex-shrink: 0;
 }
 
-.addBtn, .searchBtn, .sortBtn {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-size: 14px;
+.addBtn,
+.searchBtn,
+.sortBtn {
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: 0.3s;
+	font-size: 14px;
 }
 
 .addBtn {
-  background: #4caf50;
-  color: white;
+	background: #4caf50;
+	color: white;
 }
 
 .addBtn:hover {
-  background: #45a049;
+	background: #45a049;
 }
 
-/* Кнопка "Поиск" */
 .searchBtn {
-  background: #3498db;
-  color: white;
+	background: #3498db;
+	color: white;
 }
 
 .searchBtn:hover {
-  background: #2980b9;
+	background: #2980b9;
 }
 
-/* Кнопка "Отсортировать" */
 .sortBtn {
-  background: #9b59b6;
-  color: white;
+	background: #9b59b6;
+	color: white;
 }
 
 .sortBtn:hover {
-  background: #8e44ad;
+	background: #8e44ad;
 }
 
-/* Стили кнопок */
 .editBtn,
 .deleteBtn {
-  width: 100px;
-  height: 40px;
-  text-align: center;
-  font-size: 14px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
+	width: 100px;
+	height: 40px;
+	text-align: center;
+	font-size: 14px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
-/* Кнопка редактирования */
 .editBtn {
-  background: #f39c12;
-  color: white;
+	background: #f39c12;
+	color: white;
 }
 
 .editBtn:hover {
-  background: #e67e22;
+	background: #e67e22;
 }
 
 .deleteBtn {
-  background: #e74c3c;
-  color: white;
+	background: #e74c3c;
+	color: white;
 }
 
 .deleteBtn:hover {
-  background: #c0392b;
+	background: #c0392b;
 }
 
 .loaderContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100px;
 }
 
-/* Спиннер */
 .loader {
-    width: 50px;
-    height: 50px;
-    border: 5px solid transparent;
-    border-top-color: var(--spinner-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+	width: 50px;
+	height: 50px;
+	border: 5px solid transparent;
+	border-top-color: var(--spinner-color);
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
 }
 
-/* Анимация вращения */
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
