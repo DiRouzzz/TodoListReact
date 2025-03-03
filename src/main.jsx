@@ -4,7 +4,7 @@ import './index.css';
 import { AppContainer } from './AppContainer.jsx';
 
 createRoot(document.getElementById('root')).render(
-	<StrictMode>
-		<AppContainer />
-	</StrictMode>
+  <StrictMode>
+    <AppContainer />
+  </StrictMode>
 );
