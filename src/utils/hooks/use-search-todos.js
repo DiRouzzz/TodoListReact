@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { debounce } from '../debounce';
 
-export const useSearchTodos = (todos, setIsSearch) => {
+export const useSearchTodos = (todos) => {
   const [todoSearch, setTodosSearch] = useState([]);
+  const [isSearch, setIsSearch] = useState(false);
 
   const searchTask = (inputValue) => {
     setIsSearch(true);
@@ -10,5 +12,14 @@ export const useSearchTodos = (todos, setIsSearch) => {
     );
     setTodosSearch(searchTodos);
   };
-  return { todoSearch, searchTask };
+
+  const debouncedSearchTask = useMemo(() => debounce(searchTask, 300), [todos]);
+
+  return {
+    todoSearch,
+    setTodosSearch,
+    isSearch,
+    setIsSearch,
+    searchTask: debouncedSearchTask,
+  };
 };

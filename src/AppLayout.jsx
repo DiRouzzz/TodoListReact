@@ -24,6 +24,7 @@ export const AppLayout = ({
     <div className={styles.container}>
       <form onSubmit={(event) => event.preventDefault()}>
         <h1>📋 Мой список дел</h1>
+
         {isLoading ? (
           <div className={styles.loaderContainer}>
             <div className={styles.loader}></div>
@@ -35,8 +36,13 @@ export const AppLayout = ({
                 ref={inputRef}
                 value={inputValue}
                 type="text"
-                placeholder="Добавить новую задачу..."
-                onChange={changeInput}
+                placeholder={
+                  isSearch ? 'Поиск задачи...' : 'Добавить новую задачу...'
+                }
+                onChange={(e) => {
+                  changeInput(e);
+                  if (isSearch) searchTask(e.target.value);
+                }}
               />
               {isUpdate ? (
                 <button
@@ -47,18 +53,22 @@ export const AppLayout = ({
                 </button>
               ) : (
                 <>
-                  <button
-                    className={styles.addBtn}
-                    onClick={() => requestAddTask(inputValue)}
-                  >
-                    ➕ Добавить
-                  </button>
-                  <button
-                    className={styles.searchBtn}
-                    onClick={() => searchTask(inputValue)}
-                  >
-                    🔍 Поиск
-                  </button>
+                  {!isSearch && (
+                    <>
+                      <button
+                        className={styles.addBtn}
+                        onClick={() => requestAddTask(inputValue)}
+                      >
+                        ➕ Добавить
+                      </button>
+                      <button
+                        className={styles.searchBtn}
+                        onClick={() => searchTask(inputValue)}
+                      >
+                        🔍 Поиск
+                      </button>
+                    </>
+                  )}
                   <button
                     className={styles.sortBtn}
                     onClick={() => handleSort(todos, setTodos)}
@@ -68,7 +78,7 @@ export const AppLayout = ({
                 </>
               )}
             </div>
-            {isUpdate ? null : (
+            {!isUpdate && (
               <ul className={styles.todoList}>
                 {tasksList.map(({ id, title }) => (
                   <li key={id}>

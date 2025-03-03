@@ -13,6 +13,7 @@ export const useRequestGetTodos = () => {
           throw new Error('Ошибка запроса');
         }
         const result = await response.json();
+        console.log('запрос');
         setTimeout(() => {
           setTodos(result);
           setIsLoading(false);

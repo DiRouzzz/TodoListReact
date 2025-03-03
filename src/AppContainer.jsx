@@ -12,9 +12,14 @@ import { handleSort } from './utils/handleSort.js';
 export const AppContainer = () => {
   const [inputValue, setInputValue] = useState('');
   const { todos, setTodos, isLoading } = useRequestGetTodos();
-  const { requestAddTask, isSearch, setIsSearch } = useRequestPostTodos(
+  const { todoSearch, isSearch, setIsSearch, searchTask } = useSearchTodos(
+    todos,
+    setTodos
+  );
+  const { requestAddTask } = useRequestPostTodos(
     setTodos,
-    setInputValue
+    setInputValue,
+    setIsSearch
   );
   const { requestRemoveTask } = requestDeleteTodos(
     setTodos,
@@ -22,8 +27,8 @@ export const AppContainer = () => {
     setInputValue
   );
   const { requestEditTask, requestUpdateTask, inputRef, isUpdate, idTask } =
-    useRequestUpdateTodos(setInputValue, setTodos);
-  const { todoSearch, searchTask } = useSearchTodos(todos, setIsSearch);
+    useRequestUpdateTodos(setInputValue, setTodos, setIsSearch);
+
   const changeInput = ({ target }) => {
     setInputValue(target.value);
   };

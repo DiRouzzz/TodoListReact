@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react';
 
-export const useRequestUpdateTodos = (setInputValue, setTodos) => {
+export const useRequestUpdateTodos = (setInputValue, setTodos, setIsSearch) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [idTask, setIdTask] = useState('');
   const inputRef = useRef(null);
 
   const requestEditTask = async (id) => {
     setIsUpdate(true);
+    setIsSearch(false);
     inputRef.current.focus();
     try {
       const response = await fetch(`http://localhost:3000/tasks/${id}`);
