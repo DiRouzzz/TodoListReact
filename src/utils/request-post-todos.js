@@ -1,7 +1,4 @@
-import { useState } from 'react';
-
-export const useRequestPostTodos = (setTodos, setInputValue, setIsSearch) => {
-  // const [isSearch, setIsSearch] = useState(false);
+export const requestPostTodos = (setTodos, setInputValue, setIsSearch) => {
   const requestAddTask = async (inputValue) => {
     if (!inputValue) {
       return;

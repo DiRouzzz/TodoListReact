@@ -4,9 +4,9 @@ import {
   useRequestGetTodos,
   useRequestUpdateTodos,
   useSearchTodos,
-  useRequestPostTodos,
 } from './utils/hooks';
 import { requestDeleteTodos } from './utils/request-delete-todos';
+import { requestPostTodos} from "./utils/request-post-todos.js";
 import { handleSort } from './utils/handleSort.js';
 ///Test
 export const AppContainer = () => {
@@ -16,7 +16,7 @@ export const AppContainer = () => {
     todos,
     setTodos
   );
-  const { requestAddTask } = useRequestPostTodos(
+  const { requestAddTask } = requestPostTodos(
     setTodos,
     setInputValue,
     setIsSearch
