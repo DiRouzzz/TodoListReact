@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { ref, onValue, query, orderByChild } from 'firebase/database';
+import { db } from '../../firebase.js';
 
 export const useRequestGetTodos = () => {
   const [todos, setTodos] = useState([]);
@@ -6,24 +8,25 @@ export const useRequestGetTodos = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/tasks');
-        if (!response.ok) {
-          throw new Error('Ошибка запроса');
-        }
-        const result = await response.json();
-        console.log('запрос');
-        setTimeout(() => {
-          setTodos(result);
-          setIsLoading(false);
-        }, 2000);
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
-    fetchTasks();
+    // Запрашиваем задачи с сортировкой по title
+    const todoListQuery = query(ref(db, 'todos'), orderByChild('title'));
+
+    return onValue(todoListQuery, (snapshot) => {
+      if (!snapshot.exists()) {
+        setTodos([]);
+        setIsLoading(false);
+        return;
+      }
+
+      const loadedList = [];
+      snapshot.forEach((childSnapshot) => {
+        loadedList.push({ id: childSnapshot.key, ...childSnapshot.val() });
+      });
+
+      setTodos(loadedList);
+      setIsLoading(false);
+    });
   }, []);
 
   return { todos, setTodos, isLoading };

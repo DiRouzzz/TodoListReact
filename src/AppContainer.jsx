@@ -6,7 +6,7 @@ import {
   useSearchTodos,
 } from './utils/hooks';
 import { requestDeleteTodos } from './utils/request-delete-todos';
-import { requestPostTodos} from "./utils/request-post-todos.js";
+import { requestPostTodos } from './utils/request-post-todos.js';
 import { handleSort } from './utils/handleSort.js';
 ///Test
 export const AppContainer = () => {
@@ -27,7 +27,7 @@ export const AppContainer = () => {
     setInputValue
   );
   const { requestEditTask, requestUpdateTask, inputRef, isUpdate, idTask } =
-    useRequestUpdateTodos(setInputValue, setTodos, setIsSearch);
+    useRequestUpdateTodos(setInputValue, setIsSearch);
 
   const changeInput = ({ target }) => {
     setInputValue(target.value);

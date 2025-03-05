@@ -1,52 +1,42 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
+import { ref, set } from 'firebase/database';
+import { db } from '../../firebase.js';
 
-export const useRequestUpdateTodos = (setInputValue, setTodos) => {
+export const useRequestUpdateTodos = (setInputValue, setIsSearch) => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [idTask, setIdTask] = useState('');
   const inputRef = useRef(null);
 
-  const requestEditTask = async (id) => {
+  const requestEditTask = async (id, title) => {
     setIsUpdate(true);
     inputRef.current.focus();
-    try {
-      const response = await fetch(`http://localhost:3000/tasks/${id}`);
-      if (!response.ok) {
-        throw new Error('Ошибка при запросе задачи');
-      }
-      const result = await response.json();
-      setIdTask(result.id);
-      setInputValue(result.title);
-    } catch (error) {
-      console.error(error);
-    }
+    setIdTask(id);
+    setInputValue(title);
   };
 
-  const requestUpdateTask = async (inputValue, id) => {
-    if (!inputValue) {
-      return;
-    }
-    try {
-      const response = await fetch(`http://localhost:3000/tasks/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json;charset=utf-8' },
-        body: JSON.stringify({
-          title: inputValue.trim(),
-        }),
-      });
-      if (!response.ok) {
-        throw new Error('Ошибка при обновлении задачи');
+  const requestUpdateTask = useCallback(
+    async (inputValue, id) => {
+      if (!inputValue || !id) {
+        console.log('Невозможно обновить задачу: отсутствует ID или текст');
+        return;
       }
-      const updatedTask = await response.json();
-      setTodos((prevTodos) =>
-        prevTodos.map((todo) => (todo.id === id ? updatedTask : todo))
-      );
-      console.log('Задача успешно изменена! на', updatedTask.title);
-      setIsUpdate(false);
-      setInputValue('');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
+      const updateListRef = ref(db, `todos/${id}`);
+      set(updateListRef, { title: inputValue })
+        .then(() => {
+          console.log('Задача обновлена с id', id);
+        })
+        .catch((error) => {
+          console.error('Ошибка при обновлении задачи:', error);
+        })
+        .finally(() => {
+          setIsUpdate(false);
+          setIsSearch(false);
+          setInputValue('');
+        });
+    },
+    [setInputValue]
+  );
 
   return { requestEditTask, requestUpdateTask, inputRef, isUpdate, idTask };
 };
