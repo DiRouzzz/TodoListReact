@@ -6,12 +6,14 @@ import {
   useSearchTodos,
 } from './utils/hooks';
 import { requestDeleteTodos } from './utils/request-delete-todos';
-import { requestPostTodos} from "./utils/request-post-todos.js";
+import { requestPostTodos } from './utils/request-post-todos.js';
 import { handleSort } from './utils/handleSort.js';
-///Test
+
 export const AppContainer = () => {
   const [inputValue, setInputValue] = useState('');
-  const { todos, setTodos, isLoading } = useRequestGetTodos();
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { todos, setTodos } = useRequestGetTodos(setIsLoading);
   const { todoSearch, isSearch, setIsSearch, searchTask } = useSearchTodos(
     todos,
     setTodos
@@ -26,8 +28,8 @@ export const AppContainer = () => {
     setIsSearch,
     setInputValue
   );
-  const { requestEditTask, requestUpdateTask, inputRef, isUpdate, idTask } =
-    useRequestUpdateTodos(setInputValue, setTodos, setIsSearch);
+  const { requestEditTask, requestUpdateTask, inputRef, idTask } =
+    useRequestUpdateTodos(setInputValue, setTodos, setIsUpdate);
 
   const changeInput = ({ target }) => {
     setInputValue(target.value);

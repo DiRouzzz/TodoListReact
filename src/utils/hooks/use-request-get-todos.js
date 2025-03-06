@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 
-export const useRequestGetTodos = () => {
+export const useRequestGetTodos = (setIsLoading) => {
   const [todos, setTodos] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -26,5 +25,5 @@ export const useRequestGetTodos = () => {
     fetchTasks();
   }, []);
 
-  return { todos, setTodos, isLoading };
+  return { todos, setTodos };
 };
