@@ -18,7 +18,7 @@ export const AppLayout = ({
   handleSort,
   isLoading,
 }) => {
-  const tasksList = isSearch ? todoSearch : todos || [];
+  const tasksList = isSearch ? todoSearch : todos;
 
   return (
     <div className={styles.container}>
@@ -80,7 +80,7 @@ export const AppLayout = ({
             </div>
             {!isUpdate && (
               <ul className={styles.todoList}>
-                {Object.entries(tasksList).map(([id, { title }]) => (
+                {tasksList.map(({ id, title }) => (
                   <li key={id}>
                     <span className={styles.taskText}>{title}</span>
                     <div className={styles.taskButtons}>

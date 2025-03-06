@@ -5,6 +5,7 @@ export const requestDeleteTodos = (setTodos, setIsSearch, setInputValue) => {
   const requestRemoveTask = (id) => {
     setIsSearch(false);
     setInputValue('');
+    console.log(id)
 
     const deleteListRef = ref(db, `todos/${id}`);
     remove(deleteListRef)

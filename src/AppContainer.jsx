@@ -8,49 +8,51 @@ import {
 import { requestDeleteTodos } from './utils/request-delete-todos';
 import { requestPostTodos } from './utils/request-post-todos.js';
 import { handleSort } from './utils/handleSort.js';
-///Test
+
 export const AppContainer = () => {
   const [inputValue, setInputValue] = useState('');
-  const { todos, setTodos, isLoading } = useRequestGetTodos();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const { todos, setTodos } = useRequestGetTodos(setIsLoading);
   const { todoSearch, isSearch, setIsSearch, searchTask } = useSearchTodos(
-    todos,
-    setTodos
+      todos,
+      setTodos
   );
   const { requestAddTask } = requestPostTodos(
-    setTodos,
-    setInputValue,
-    setIsSearch
+      setTodos,
+      setInputValue,
+      setIsSearch
   );
   const { requestRemoveTask } = requestDeleteTodos(
-    setTodos,
-    setIsSearch,
-    setInputValue
+      setTodos,
+      setIsSearch,
+      setInputValue
   );
-  const { requestEditTask, requestUpdateTask, inputRef, isUpdate, idTask } =
-    useRequestUpdateTodos(setInputValue, setIsSearch);
+  const { requestEditTask, requestUpdateTask, inputRef, idTask } =
+      useRequestUpdateTodos(setInputValue, setIsSearch, setIsUpdate);
 
   const changeInput = ({ target }) => {
     setInputValue(target.value);
   };
 
   return (
-    <AppLayout
-      todos={todos}
-      setTodos={setTodos}
-      requestAddTask={requestAddTask}
-      changeInput={changeInput}
-      inputValue={inputValue}
-      requestRemoveTask={requestRemoveTask}
-      inputRef={inputRef}
-      requestEditTask={requestEditTask}
-      isUpdate={isUpdate}
-      requestUpdateTask={requestUpdateTask}
-      idTask={idTask}
-      searchTask={searchTask}
-      isSearch={isSearch}
-      todoSearch={todoSearch}
-      handleSort={handleSort}
-      isLoading={isLoading}
-    />
+      <AppLayout
+          todos={todos}
+          setTodos={setTodos}
+          requestAddTask={requestAddTask}
+          changeInput={changeInput}
+          inputValue={inputValue}
+          requestRemoveTask={requestRemoveTask}
+          inputRef={inputRef}
+          requestEditTask={requestEditTask}
+          isUpdate={isUpdate}
+          requestUpdateTask={requestUpdateTask}
+          idTask={idTask}
+          searchTask={searchTask}
+          isSearch={isSearch}
+          todoSearch={todoSearch}
+          handleSort={handleSort}
+          isLoading={isLoading}
+      />
   );
 };

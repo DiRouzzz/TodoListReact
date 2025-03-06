@@ -2,8 +2,7 @@ import { useRef, useState, useCallback } from 'react';
 import { ref, set } from 'firebase/database';
 import { db } from '../../firebase.js';
 
-export const useRequestUpdateTodos = (setInputValue, setIsSearch) => {
-  const [isUpdate, setIsUpdate] = useState(false);
+export const useRequestUpdateTodos = (setInputValue, setIsSearch, setIsUpdate) => {
   const [idTask, setIdTask] = useState('');
   const inputRef = useRef(null);
 
@@ -15,28 +14,28 @@ export const useRequestUpdateTodos = (setInputValue, setIsSearch) => {
   };
 
   const requestUpdateTask = useCallback(
-    async (inputValue, id) => {
-      if (!inputValue || !id) {
-        console.log('Невозможно обновить задачу: отсутствует ID или текст');
-        return;
-      }
+      async (inputValue, id) => {
+        if (!inputValue || !id) {
+          console.log('Невозможно обновить задачу: отсутствует ID или текст');
+          return;
+        }
 
-      const updateListRef = ref(db, `todos/${id}`);
-      set(updateListRef, { title: inputValue })
-        .then(() => {
-          console.log('Задача обновлена с id', id);
-        })
-        .catch((error) => {
-          console.error('Ошибка при обновлении задачи:', error);
-        })
-        .finally(() => {
-          setIsUpdate(false);
-          setIsSearch(false);
-          setInputValue('');
-        });
-    },
-    [setInputValue]
+        const updateListRef = ref(db, `todos/${id}`);
+        set(updateListRef, { title: inputValue })
+            .then(() => {
+              console.log('Задача обновлена с id', id);
+            })
+            .catch((error) => {
+              console.error('Ошибка при обновлении задачи:', error);
+            })
+            .finally(() => {
+              setIsUpdate(false);
+              setIsSearch(false);
+              setInputValue('');
+            });
+      },
+      [setInputValue]
   );
 
-  return { requestEditTask, requestUpdateTask, inputRef, isUpdate, idTask };
+  return { requestEditTask, requestUpdateTask, inputRef, idTask };
 };
