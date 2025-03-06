@@ -4,26 +4,33 @@ import {
   useRequestGetTodos,
   useRequestUpdateTodos,
   useSearchTodos,
-  useRequestPostTodos,
 } from './utils/hooks';
 import { requestDeleteTodos } from './utils/request-delete-todos';
+import { requestPostTodos } from './utils/request-post-todos.js';
 import { handleSort } from './utils/handleSort.js';
 
 export const AppContainer = () => {
   const [inputValue, setInputValue] = useState('');
-  const { todos, setTodos, isLoading } = useRequestGetTodos();
-  const { requestAddTask, isSearch, setIsSearch } = useRequestPostTodos(
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { todos, setTodos } = useRequestGetTodos(setIsLoading);
+  const { todoSearch, isSearch, setIsSearch, searchTask } = useSearchTodos(
+    todos,
+    setTodos
+  );
+  const { requestAddTask } = requestPostTodos(
     setTodos,
-    setInputValue
+    setInputValue,
+    setIsSearch
   );
   const { requestRemoveTask } = requestDeleteTodos(
     setTodos,
     setIsSearch,
     setInputValue
   );
-  const { requestEditTask, requestUpdateTask, inputRef, isUpdate, idTask } =
-    useRequestUpdateTodos(setInputValue, setTodos);
-  const { todoSearch, searchTask } = useSearchTodos(todos, setIsSearch);
+  const { requestEditTask, requestUpdateTask, inputRef, idTask } =
+    useRequestUpdateTodos(setInputValue, setTodos, setIsUpdate);
+
   const changeInput = ({ target }) => {
     setInputValue(target.value);
   };

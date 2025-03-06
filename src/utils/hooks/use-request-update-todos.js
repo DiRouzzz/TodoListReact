@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 
-export const useRequestUpdateTodos = (setInputValue, setTodos) => {
-  const [isUpdate, setIsUpdate] = useState(false);
+export const useRequestUpdateTodos = (setInputValue, setTodos, setIsUpdate) => {
   const [idTask, setIdTask] = useState('');
   const inputRef = useRef(null);
 
@@ -48,5 +47,5 @@ export const useRequestUpdateTodos = (setInputValue, setTodos) => {
     }
   };
 
-  return { requestEditTask, requestUpdateTask, inputRef, isUpdate, idTask };
+  return { requestEditTask, requestUpdateTask, inputRef, idTask };
 };
