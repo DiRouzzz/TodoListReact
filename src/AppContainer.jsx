@@ -29,7 +29,7 @@ export const AppContainer = () => {
     setInputValue
   );
   const { requestEditTask, requestUpdateTask, inputRef, idTask } =
-    useRequestUpdateTodos(setInputValue, setTodos, setIsUpdate);
+    useRequestUpdateTodos(setInputValue, setTodos, setIsUpdate, setIsSearch);
 
   const changeInput = ({ target }) => {
     setInputValue(target.value);

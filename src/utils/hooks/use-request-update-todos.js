@@ -1,6 +1,11 @@
 import { useRef, useState } from 'react';
 
-export const useRequestUpdateTodos = (setInputValue, setTodos, setIsUpdate) => {
+export const useRequestUpdateTodos = (
+  setInputValue,
+  setTodos,
+  setIsUpdate,
+  setIsSearch
+) => {
   const [idTask, setIdTask] = useState('');
   const inputRef = useRef(null);
 
@@ -42,6 +47,7 @@ export const useRequestUpdateTodos = (setInputValue, setTodos, setIsUpdate) => {
       console.log('Задача успешно изменена! на', updatedTask.title);
       setIsUpdate(false);
       setInputValue('');
+      setIsSearch(false);
     } catch (error) {
       console.error(error);
     }
