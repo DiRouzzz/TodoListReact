@@ -8,9 +8,12 @@ import {
 import { requestDeleteTodos } from './utils/request-delete-todos';
 import { requestPostTodos } from './utils/request-post-todos.js';
 import { handleSort } from './utils/handleSort.js';
+import { Route, Routes, useParams } from 'react-router-dom';
+import { Task } from './Task.jsx';
 
 export const AppContainer = () => {
   const [inputValue, setInputValue] = useState('');
+  const [task, setTask] = useState('');
   const [isUpdate, setIsUpdate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { todos, setTodos } = useRequestGetTodos(setIsLoading);
@@ -29,30 +32,54 @@ export const AppContainer = () => {
     setInputValue
   );
   const { requestEditTask, requestUpdateTask, inputRef, idTask } =
-    useRequestUpdateTodos(setInputValue, setTodos, setIsUpdate, setIsSearch);
+    useRequestUpdateTodos(setInputValue, setTodos, setIsUpdate, setIsSearch, setTask);
 
   const changeInput = ({ target }) => {
     setInputValue(target.value);
   };
 
   return (
-    <AppLayout
-      todos={todos}
-      setTodos={setTodos}
-      requestAddTask={requestAddTask}
-      changeInput={changeInput}
-      inputValue={inputValue}
-      requestRemoveTask={requestRemoveTask}
-      inputRef={inputRef}
-      requestEditTask={requestEditTask}
-      isUpdate={isUpdate}
-      requestUpdateTask={requestUpdateTask}
-      idTask={idTask}
-      searchTask={searchTask}
-      isSearch={isSearch}
-      todoSearch={todoSearch}
-      handleSort={handleSort}
-      isLoading={isLoading}
-    />
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <AppLayout
+            todos={todos}
+            setTodos={setTodos}
+            requestAddTask={requestAddTask}
+            changeInput={changeInput}
+            inputValue={inputValue}
+            requestRemoveTask={requestRemoveTask}
+            // inputRef={inputRef}
+            requestEditTask={requestEditTask}
+            isUpdate={isUpdate}
+            requestUpdateTask={requestUpdateTask}
+            idTask={idTask}
+            searchTask={searchTask}
+            isSearch={isSearch}
+            todoSearch={todoSearch}
+            handleSort={handleSort}
+            isLoading={isLoading}
+          />
+        }
+      />
+      <Route
+        path="/task/:id"
+        element={
+          <Task
+            requestRemoveTask={requestRemoveTask}
+            requestUpdateTask={requestUpdateTask}
+            inputValue={inputValue}
+            requestEditTask={requestEditTask}
+            isUpdate={isUpdate}
+            changeInput={changeInput}
+            inputRef={inputRef}
+            setTask={setTask}
+            task={task}
+            setIsUpdate={setIsUpdate}
+          />
+        }
+      />
+    </Routes>
   );
 };

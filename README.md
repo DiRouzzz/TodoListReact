@@ -2,19 +2,22 @@
 
 ## Пример работы
 
-![todoList](src/assets/todoList.png) 
+![todoList](src/assets/todoList.png)
 
 ## Описание
 
-*Реализация приложения с помощью JSON Server и Firebase*
+_Реализация приложения с помощью JSON Server и Firebase_
 
-## Использовние JSON Server 
+## Использовние JSON Server
 
 ### Установка:
+
 ```sh
 $ make setup
 ```
+
 ### Запуск:
+
 ```sh
 $ make start
 ```

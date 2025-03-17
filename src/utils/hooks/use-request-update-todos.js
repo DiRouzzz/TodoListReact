@@ -4,14 +4,15 @@ export const useRequestUpdateTodos = (
   setInputValue,
   setTodos,
   setIsUpdate,
-  setIsSearch
+  setIsSearch,
+  setTask
 ) => {
   const [idTask, setIdTask] = useState('');
   const inputRef = useRef(null);
 
   const requestEditTask = async (id) => {
     setIsUpdate(true);
-    inputRef.current.focus();
+
     try {
       const response = await fetch(`http://localhost:3000/tasks/${id}`);
       if (!response.ok) {
@@ -44,6 +45,7 @@ export const useRequestUpdateTodos = (
       setTodos((prevTodos) =>
         prevTodos.map((todo) => (todo.id === id ? updatedTask : todo))
       );
+      setTask(updatedTask.title);
       console.log('Задача успешно изменена! на', updatedTask.title);
       setIsUpdate(false);
       setInputValue('');

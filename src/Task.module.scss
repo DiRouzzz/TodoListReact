@@ -1,0 +1,110 @@
+.container {
+  width: 700px;
+  background: var(--task-bg);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px var(--task-shadow);
+}
+
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.inputRow input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.inputRow button {
+  flex-shrink: 0; // не сжимается
+}
+/* === Общие стили кнопок === */
+.button {
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Назад */
+.backBtn {
+  @extend .button;
+  background: #1a11a0;
+  color: white;
+  margin-bottom: 20px;
+
+  &:hover {
+    background: #5f4fe9;
+  }
+}
+
+/* Кнопка редактирования */
+.editBtn {
+  @extend .button;
+  background: #f39c12;
+  color: white;
+
+  &:hover {
+    background: #e67e22;
+  }
+}
+
+/* Кнопка удаления */
+.deleteBtn {
+  @extend .button;
+  background: #e74c3c;
+  color: white;
+
+  &:hover {
+    background: #c0392b;
+  }
+}
+
+h1 {
+  text-align: center;
+}
+
+.task {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--task-bg);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 5px var(--task-shadow);
+  transition: 0.3s;
+  overflow: hidden;
+}
+
+.taskText {
+  flex: 1;
+  min-width: 0;
+  max-width: calc(100% - 120px);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.taskButtons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-shrink: 0;
+}

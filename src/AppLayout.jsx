@@ -1,4 +1,5 @@
-import styles from './App.module.css';
+import styles from './App.module.scss';
+import { Link } from 'react-router-dom';
 
 export const AppLayout = ({
   todos,
@@ -44,63 +45,38 @@ export const AppLayout = ({
                   if (isSearch) searchTask(e.target.value);
                 }}
               />
-              {isUpdate ? (
-                <button
-                  className={styles.editBtn}
-                  onClick={() => requestUpdateTask(inputValue, idTask)}
-                >
-                  ✏️ Изменить
-                </button>
-              ) : (
+              {!isSearch && (
                 <>
-                  {!isSearch && (
-                    <>
-                      <button
-                        className={styles.addBtn}
-                        onClick={() => requestAddTask(inputValue)}
-                      >
-                        ➕ Добавить
-                      </button>
-                      <button
-                        className={styles.searchBtn}
-                        onClick={() => searchTask(inputValue)}
-                      >
-                        🔍 Поиск
-                      </button>
-                    </>
-                  )}
                   <button
-                    className={styles.sortBtn}
-                    onClick={() => handleSort(todos, setTodos)}
+                    className={styles.addBtn}
+                    onClick={() => requestAddTask(inputValue)}
                   >
-                    🔃 Отсортировать
+                    ➕ Добавить
+                  </button>
+                  <button
+                    className={styles.searchBtn}
+                    onClick={() => searchTask(inputValue)}
+                  >
+                    🔍 Поиск
                   </button>
                 </>
               )}
+              <button
+                className={styles.sortBtn}
+                onClick={() => handleSort(todos, setTodos)}
+              >
+                🔃 Отсортировать
+              </button>
             </div>
-            {!isUpdate && (
-              <ul className={styles.todoList}>
-                {tasksList.map(({ id, title }) => (
-                  <li key={id}>
+            <ul className={styles.todoList}>
+              {tasksList.map(({ id, title }) => (
+                <li key={id}>
+                  <Link to={`/task/${id}`} className={styles.link}>
                     <span className={styles.taskText}>{title}</span>
-                    <div className={styles.taskButtons}>
-                      <button
-                        className={styles.editBtn}
-                        onClick={() => requestEditTask(id)}
-                      >
-                        ✏️ Редактировать
-                      </button>
-                      <button
-                        className={styles.deleteBtn}
-                        onClick={() => requestRemoveTask(id)}
-                      >
-                        ❌ Удалить
-                      </button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </>
         )}
       </form>
