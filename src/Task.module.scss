@@ -6,7 +6,6 @@
   box-shadow: 0 4px 10px var(--task-shadow);
 }
 
-
 .inputRow {
   display: flex;
   align-items: center;
@@ -25,9 +24,9 @@
 }
 
 .inputRow button {
-  flex-shrink: 0; // не сжимается
+  flex-shrink: 0;
 }
-/* === Общие стили кнопок === */
+
 .button {
   width: 100px;
   height: 40px;
@@ -39,7 +38,6 @@
   transition: 0.3s;
 }
 
-/* Назад */
 .backBtn {
   @extend .button;
   background: #1a11a0;
@@ -51,7 +49,6 @@
   }
 }
 
-/* Кнопка редактирования */
 .editBtn {
   @extend .button;
   background: #f39c12;
@@ -62,7 +59,6 @@
   }
 }
 
-/* Кнопка удаления */
 .deleteBtn {
   @extend .button;
   background: #e74c3c;

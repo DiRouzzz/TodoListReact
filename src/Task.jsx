@@ -13,10 +13,10 @@ export const Task = ({
   setTask,
   task,
   setIsUpdate,
+  fetchTasks
 }) => {
   const params = useParams();
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     if (isUpdate && inputRef.current) {
@@ -30,8 +30,12 @@ export const Task = ({
         const response = await fetch(
           `http://localhost:3000/tasks/${params.id}`
         );
+        if (response.status === 404) {
+          navigate('/task-not-exist');
+          return;
+        }
         if (!response.ok) {
-          throw new Error('Ошибка при запросе задачи с id', params.id);
+          throw new Error(`Ошибка при запросе задачи с id ${params.id}`);
         }
         const result = await response.json();
         setTask(result.title);
@@ -46,23 +50,32 @@ export const Task = ({
   const handleDelete = async () => {
     try {
       await requestRemoveTask(params.id);
+      await fetchTasks();
       navigate('/');
-      window.location.reload();
     } catch (error) {
       console.error('Ошибка при удалении задачи:', error);
     }
+  };
+
+  const handleUpdate = async () => {
+    await requestUpdateTask(inputValue, params.id);
+    await fetchTasks();
+    setIsUpdate(false);
   };
 
   return (
     <>
       <title>Дело</title>
       <div className={styles.container}>
-        <button className={styles.backBtn} onClick={() => {
-          navigate(-1);
-          setIsUpdate(false);
-        }}>
-          Назад
-        </button>
+        {isUpdate ? (
+          <button className={styles.backBtn} onClick={handleUpdate}>
+            💾 Сохранить и Назад
+          </button>
+        ) : (
+          <button className={styles.backBtn} onClick={() => navigate('/')}>
+            ↩️ Назад
+          </button>
+        )}
         <h1>Страница Дела</h1>
         {isUpdate ? (
           <div className={styles.inputRow}>
@@ -72,10 +85,7 @@ export const Task = ({
               value={inputValue}
               onChange={(e) => changeInput(e)}
             />
-            <button
-              className={styles.editBtn}
-              onClick={() => requestUpdateTask(inputValue, params.id)}
-            >
+            <button className={styles.editBtn} onClick={handleUpdate}>
               ✏️ Изменить
             </button>
           </div>

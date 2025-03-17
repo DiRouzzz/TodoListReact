@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 export const useRequestUpdateTodos = (
   setInputValue,
@@ -7,19 +7,16 @@ export const useRequestUpdateTodos = (
   setIsSearch,
   setTask
 ) => {
-  const [idTask, setIdTask] = useState('');
   const inputRef = useRef(null);
 
   const requestEditTask = async (id) => {
     setIsUpdate(true);
-
     try {
       const response = await fetch(`http://localhost:3000/tasks/${id}`);
       if (!response.ok) {
         throw new Error('Ошибка при запросе задачи');
       }
       const result = await response.json();
-      setIdTask(result.id);
       setInputValue(result.title);
     } catch (error) {
       console.error(error);
@@ -55,5 +52,5 @@ export const useRequestUpdateTodos = (
     }
   };
 
-  return { requestEditTask, requestUpdateTask, inputRef, idTask };
+  return { requestEditTask, requestUpdateTask, inputRef };
 };

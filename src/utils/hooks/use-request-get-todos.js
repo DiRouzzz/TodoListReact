@@ -3,26 +3,24 @@ import { useState, useEffect } from 'react';
 export const useRequestGetTodos = (setIsLoading) => {
   const [todos, setTodos] = useState([]);
 
-  useEffect(() => {
+  const fetchTasks = async () => {
     setIsLoading(true);
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/tasks');
-        if (!response.ok) {
-          throw new Error('Ошибка запроса');
-        }
-        const result = await response.json();
-        setTimeout(() => {
-          setTodos(result);
-          setIsLoading(false);
-        }, 2000);
-      } catch (error) {
-        console.error(error);
+    try {
+      const response = await fetch('http://localhost:3000/tasks');
+      if (!response.ok) {
+        throw new Error('Ошибка запроса');
       }
-    };
+      const result = await response.json();
+      setTodos(result);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  useEffect(() => {
     fetchTasks();
   }, []);
 
-  return { todos, setTodos };
+  return { todos, setTodos, fetchTasks };
 };
