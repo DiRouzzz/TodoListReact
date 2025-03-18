@@ -1,68 +1,17 @@
-import { useParams, useNavigate } from 'react-router-dom';
 import styles from './Task.module.scss';
-import { useEffect } from 'react';
 
-export const Task = ({
-  requestRemoveTask,
-  requestUpdateTask,
+export const TaskLayout = ({
+  handleDelete,
+  handleUpdate,
   inputValue,
+  task,
   isUpdate,
-  requestEditTask,
   inputRef,
   changeInput,
-  setTask,
-  task,
-  setIsUpdate,
-  fetchTasks,
+  navigate,
+  params,
+  requestEditTask
 }) => {
-  const params = useParams();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isUpdate && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isUpdate]);
-
-  useEffect(() => {
-    const fetchTask = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/tasks/${params.id}`
-        );
-        if (response.status === 404) {
-          navigate('/task-not-exist');
-          return;
-        }
-        if (!response.ok) {
-          throw new Error(`Ошибка при запросе задачи с id ${params.id}`);
-        }
-        const result = await response.json();
-        setTask(result.title);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchTask();
-  }, []);
-
-  const handleDelete = async () => {
-    try {
-      await requestRemoveTask(params.id);
-      await fetchTasks();
-      navigate('/');
-    } catch (error) {
-      console.error('Ошибка при удалении задачи:', error);
-    }
-  };
-
-  const handleUpdate = async () => {
-    await requestUpdateTask(inputValue, params.id);
-    await fetchTasks();
-    setIsUpdate(false);
-  };
-
   return (
     <>
       <title>Дело</title>

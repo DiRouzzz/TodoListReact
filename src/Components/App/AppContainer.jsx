@@ -9,7 +9,7 @@ import { requestDeleteTodos } from '../../utils/request-delete-todos.js';
 import { requestPostTodos } from '../../utils/request-post-todos.js';
 import { handleSort } from '../../utils/handleSort.js';
 import { Route, Routes } from 'react-router-dom';
-import { Task } from '../Task/Task.jsx';
+import { TaskContainer } from '../Task/TaskContainer.jsx';
 import { NotFound } from '../NotFound/NotFound.jsx';
 import { TaskNotExist } from '../NotFound/TaskNotExist.jsx';
 
@@ -71,7 +71,7 @@ export const AppContainer = () => {
       <Route
         path="/task/:id"
         element={
-          <Task
+          <TaskContainer
             requestRemoveTask={requestRemoveTask}
             requestUpdateTask={requestUpdateTask}
             requestEditTask={requestEditTask}
