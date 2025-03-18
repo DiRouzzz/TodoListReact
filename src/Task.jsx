@@ -13,7 +13,7 @@ export const Task = ({
   setTask,
   task,
   setIsUpdate,
-  fetchTasks
+  fetchTasks,
 }) => {
   const params = useParams();
   const navigate = useNavigate();
