@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { AppLayout } from './AppLayout';
+import { AppLayout } from './AppLayout.jsx';
 import {
   useRequestGetTodos,
   useRequestUpdateTodos,
   useSearchTodos,
-} from './utils/hooks';
-import { requestDeleteTodos } from './utils/request-delete-todos';
-import { requestPostTodos } from './utils/request-post-todos.js';
-import { handleSort } from './utils/handleSort.js';
+} from '../../utils/hooks/index.js';
+import { requestDeleteTodos } from '../../utils/request-delete-todos.js';
+import { requestPostTodos } from '../../utils/request-post-todos.js';
+import { handleSort } from '../../utils/handleSort.js';
 import { Route, Routes } from 'react-router-dom';
-import { Task } from './Task.jsx';
-import { NotFound } from './NotFound';
-import { TaskNotExist } from './TaskNotExist.jsx';
+import { Task } from '../Task/Task.jsx';
+import { NotFound } from '../NotFound/NotFound.jsx';
+import { TaskNotExist } from '../NotFound/TaskNotExist.jsx';
 
 export const AppContainer = () => {
   const [inputValue, setInputValue] = useState('');
