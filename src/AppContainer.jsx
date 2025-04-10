@@ -32,7 +32,6 @@ export const AppContainer = () => {
     }
   };
 
-
   const handleInputChange = (e) => {
     const value = e.target.value;
     dispatch(changeInputValue(value));
@@ -43,7 +42,7 @@ export const AppContainer = () => {
   };
 
   const handleUpdateTask = ({ id, title }) => {
-    if (inputValue.trim().length) {
+    if (title.trim().length) {
       dispatch(updateTask({ id, title }));
     }
   };

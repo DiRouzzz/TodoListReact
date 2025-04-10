@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { TODO_API } from '../api';
 
 export const fetchTodos = createAsyncThunk(
   'todos/fetchTodos',
   async function (_, { rejectWithValue }) {
     try {
-      const response = await fetch('http://localhost:3000/tasks');
+      const response = await fetch(TODO_API);
 
       if (!response.ok) {
         throw new Error('Ошибка запроса!');
@@ -23,12 +24,12 @@ export const addNewTodo = createAsyncThunk(
   'todos/addNewTodo',
   async function (inputValue, { rejectWithValue, dispatch }) {
     try {
-      const response = await fetch('http://localhost:3000/tasks', {
+      const response = await fetch(TODO_API, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title: inputValue }),
+        body: JSON.stringify({ title: inputValue.trim() }),
       });
 
       if (!response.ok) {
@@ -49,7 +50,7 @@ export const deleteTodo = createAsyncThunk(
   'todos/deleteTodo',
   async function (id, { rejectWithValue, dispatch }) {
     try {
-      const response = await fetch(`http://localhost:3000/tasks/${id}`, {
+      const response = await fetch(`${TODO_API}/${id}`, {
         method: 'DELETE',
       });
 
@@ -70,7 +71,7 @@ export const editTodo = createAsyncThunk(
   'todos/editTask',
   async function (id, { rejectWithValue, dispatch }) {
     try {
-      const response = await fetch(`http://localhost:3000/tasks/${id}`);
+      const response = await fetch(`${TODO_API}/${id}`);
       if (!response.ok) {
         throw new Error('Ошибка при запросе задачи');
       }
@@ -87,11 +88,8 @@ export const editTodo = createAsyncThunk(
 export const updateTask = createAsyncThunk(
   'todos/updateTask',
   async function ({ id, title }, { rejectWithValue, dispatch }) {
-    if (!title.length) {
-      return;
-    }
     try {
-      const response = await fetch(`http://localhost:3000/tasks/${id}`, {
+      const response = await fetch(`${TODO_API}/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json;charset=utf-8' },
         body: JSON.stringify({ title: title.trim() }),
@@ -103,7 +101,6 @@ export const updateTask = createAsyncThunk(
       dispatch(updateTodoTask(data));
       dispatch(clearInput());
       dispatch(clearSearch());
-      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -186,6 +183,9 @@ const todoSlice = createSlice({
       })
       .addCase(editTodo.fulfilled, (state) => {
         state.isUpdate = true;
+      })
+      .addCase(addNewTodo.fulfilled, (state, action) => {
+        console.log('action addNewTodo', action.payload);
       })
       .addCase(fetchTodos.rejected, setError)
       .addCase(addNewTodo.rejected, setError)
