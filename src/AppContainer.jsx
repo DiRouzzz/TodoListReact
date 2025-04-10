@@ -52,7 +52,6 @@ export const AppContainer = () => {
       handleActionAddTodo={handleActionAddTodo}
       handleInputChange={handleInputChange}
       handleUpdateTask={handleUpdateTask}
-      debouncedSearch={debouncedSearch}
     />
   );
 };

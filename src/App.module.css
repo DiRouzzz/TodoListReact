@@ -64,7 +64,8 @@ h1 {
 
 .addBtn,
 .searchBtn,
-.sortBtn {
+.sortBtn,
+.cancelSearch {
   padding: 10px;
   border: none;
   border-radius: 5px;
@@ -128,6 +129,15 @@ h1 {
 
 .deleteBtn:hover {
   background: #c0392b;
+}
+
+.cancelSearch {
+  background: rgb(206, 27, 152);
+  color: white;
+}
+
+.cancelSearch:hover {
+  background: rgb(153, 45, 117);
 }
 
 .loaderContainer {

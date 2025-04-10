@@ -85,8 +85,8 @@ export const AppLayout = ({
                     🔃 Отсортировать
                   </button>
                   {isSearch && (
-                    <button onClick={() => dispatch(clearSearch())}>
-                      Отменить поиск
+                    <button className={styles.cancelSearch} onClick={() => dispatch(clearSearch())}>
+                     ❌ Отменить поиск
                     </button>
                   )}
                 </>
