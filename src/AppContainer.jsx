@@ -1,58 +1,59 @@
-import { useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { AppLayout } from './AppLayout';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  useRequestGetTodos,
-  useRequestUpdateTodos,
-  useSearchTodos,
-} from './utils/hooks';
-import { requestDeleteTodos } from './utils/request-delete-todos';
-import { requestPostTodos } from './utils/request-post-todos.js';
-import { handleSort } from './utils/handleSort.js';
+  fetchTodos,
+  addNewTodo,
+  changeInputValue,
+  clearInput,
+  updateTask,
+  searchTask,
+} from './store/todoSlice.js';
+import { debounce } from './utils/debounce.js';
 
 export const AppContainer = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const { todos, setTodos } = useRequestGetTodos(setIsLoading);
-  const { todoSearch, isSearch, setIsSearch, searchTask } = useSearchTodos(
-    todos,
-    setTodos
-  );
-  const { requestAddTask } = requestPostTodos(
-    setTodos,
-    setInputValue,
-    setIsSearch
-  );
-  const { requestRemoveTask } = requestDeleteTodos(
-    setTodos,
-    setIsSearch,
-    setInputValue
-  );
-  const { requestEditTask, requestUpdateTask, inputRef, idTask } =
-    useRequestUpdateTodos(setInputValue, setTodos, setIsUpdate);
+  const dispatch = useDispatch();
+  const { inputValue, isSearch } = useSelector((state) => state.todos);
 
-  const changeInput = ({ target }) => {
-    setInputValue(target.value);
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
+
+  const debouncedSearch = useMemo(() => {
+    return debounce((value) => {
+      dispatch(searchTask(value));
+    }, 300);
+  }, [dispatch]);
+
+  const handleActionAddTodo = () => {
+    if (inputValue.trim().length) {
+      dispatch(addNewTodo(inputValue));
+      dispatch(clearInput());
+    }
+  };
+
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    dispatch(changeInputValue(value));
+
+    if (isSearch) {
+      debouncedSearch(value);
+    }
+  };
+
+  const handleUpdateTask = ({ id, title }) => {
+    if (inputValue.trim().length) {
+      dispatch(updateTask({ id, title }));
+    }
   };
 
   return (
     <AppLayout
-      todos={todos}
-      setTodos={setTodos}
-      requestAddTask={requestAddTask}
-      changeInput={changeInput}
-      inputValue={inputValue}
-      requestRemoveTask={requestRemoveTask}
-      inputRef={inputRef}
-      requestEditTask={requestEditTask}
-      isUpdate={isUpdate}
-      requestUpdateTask={requestUpdateTask}
-      idTask={idTask}
-      searchTask={searchTask}
-      isSearch={isSearch}
-      todoSearch={todoSearch}
-      handleSort={handleSort}
-      isLoading={isLoading}
+      handleActionAddTodo={handleActionAddTodo}
+      handleInputChange={handleInputChange}
+      handleUpdateTask={handleUpdateTask}
+      debouncedSearch={debouncedSearch}
     />
   );
 };
