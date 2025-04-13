@@ -1,31 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  deleteTodo,
-  editTodo,
-  sortTodos,
-  searchMode,
-  clearSearch,
-} from './store/todoSlice';
+import { sortTodos, searchMode, clearSearch } from './store/todoSlice';
 import styles from './App.module.css';
 import { useRef } from 'react';
 
 export const AppLayout = ({
-  handleActionAddTodo,
+  handleAddTodo,
+  handleDeleteTodo,
   handleInputChange,
-  handleUpdateTask,
+  handleGetTodo,
+  handleUpdateTodo,
+  todos,
+  isLoading,
 }) => {
-  const {
-    todos,
-    isLoading,
-    isUpdate,
-    inputValue,
-    idTask,
-    searchResults,
-    isSearch,
-  } = useSelector((state) => state.todos);
+  const { isUpdate, inputValue, searchResults, isSearch } = useSelector(
+    (state) => state.todos
+  );
 
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  console.log('ref', inputRef);
+
   const tasksToDisplay = isSearch ? searchResults : todos;
 
   return (
@@ -52,22 +46,14 @@ export const AppLayout = ({
                 }}
               />
               {isUpdate ? (
-                <button
-                  className={styles.editBtn}
-                  onClick={() =>
-                    handleUpdateTask({ id: idTask, title: inputValue })
-                  }
-                >
+                <button className={styles.editBtn} onClick={handleUpdateTodo}>
                   ✏️ Изменить
                 </button>
               ) : (
                 <>
                   {!isSearch && (
                     <>
-                      <button
-                        className={styles.addBtn}
-                        onClick={handleActionAddTodo}
-                      >
+                      <button className={styles.addBtn} onClick={handleAddTodo}>
                         ➕ Добавить
                       </button>
                       <button
@@ -85,8 +71,11 @@ export const AppLayout = ({
                     🔃 Отсортировать
                   </button>
                   {isSearch && (
-                    <button className={styles.cancelSearch} onClick={() => dispatch(clearSearch())}>
-                     ❌ Отменить поиск
+                    <button
+                      className={styles.cancelSearch}
+                      onClick={() => dispatch(clearSearch())}
+                    >
+                      ❌ Отменить поиск
                     </button>
                   )}
                 </>
@@ -100,13 +89,16 @@ export const AppLayout = ({
                     <div className={styles.taskButtons}>
                       <button
                         className={styles.editBtn}
-                        onClick={() => dispatch(editTodo(id))}
+                        onClick={() => {
+                          handleGetTodo({ id, title });
+                          inputRef.current.focus();
+                        }}
                       >
                         ✏️ Редактировать
                       </button>
                       <button
                         className={styles.deleteBtn}
-                        onClick={() => dispatch(deleteTodo(id))}
+                        onClick={() => handleDeleteTodo(id)}
                       >
                         ❌ Удалить
                       </button>

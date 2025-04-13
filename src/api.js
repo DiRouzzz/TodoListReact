@@ -1,1 +1,3 @@
-export const TODO_API = 'http://localhost:3000/tasks';
+export const TODO_API = 'http://localhost:3000/';
+
+
