@@ -39,6 +39,11 @@ export const todosApi = createApi({
         method: 'PUT',
         body: { title },
       }),
+      invalidatesTags: [{ type: 'Tasks', id: 'LIST' }],
+    }),
+    getTodoItem: build.query({
+      query: (id) => `tasks/${id}`,
+      providesTags: (result, error, id) => [{ type: 'Tasks', id }],
     }),
   }),
 });
@@ -48,4 +53,5 @@ export const {
   useAddNewTodoMutation,
   useDeleteTodoMutation,
   useUpdateTodoMutation,
+  useGetTodoItemQuery,
 } = todosApi;

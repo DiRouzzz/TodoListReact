@@ -25,10 +25,7 @@ const todoSlice = createSlice({
       state.idTask = action.payload.id;
       state.inputValue = action.payload.title;
     },
-    updateTodoTask(state, action) {
-      state.todos = state.todos.map((todo) =>
-        todo.id === action.payload.id ? action.payload : todo
-      );
+    endEdtiting(state) {
       state.isUpdate = false;
       state.idTask = null;
     },
@@ -53,6 +50,12 @@ const todoSlice = createSlice({
       state.searchResults = [];
       state.inputValue = '';
     },
+    removeFromSearch(state, action) {
+      const idToRemove = action.payload;
+      state.searchResults = state.searchResults.filter(
+        (todo) => todo.id !== idToRemove
+      );
+    },
   },
 });
 
@@ -60,12 +63,14 @@ export const {
   changeInputValue,
   clearInput,
   startEditing,
-  updateTodoTask,
+  endEdtiting,
   sortTodos,
   searchTask,
   clearSearch,
   searchMode,
   setTodos,
+  getTodoItem,
+  removeFromSearch,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
